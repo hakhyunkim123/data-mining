@@ -1,4 +1,4 @@
 data-mining class study code
 ============================
 
-#k-means clustering implementation and test.
+1 k-means clustering implementation and test.
