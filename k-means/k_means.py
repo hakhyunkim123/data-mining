@@ -3,15 +3,7 @@ import random
 import numpy as np
 import matplotlib as mpl
 import matplotlib.pylab as plt
-
-# load mnist data
-def load_mnist_dataset() :
-    from mnist import MNIST
-    mn_data = MNIST('./mnist')
-
-    images, labels = mn_data.load_training()
-    print('loading mnist dataset complete.')
-    return images, labels
+from load_mnist import load_mnist_dataset
 
 class Kmeans:
     def __init__(self, dataset, k, max_iterations=50) :
@@ -42,6 +34,10 @@ class Kmeans:
         for idx in range(self.k) :
             self.np_centroids[idx] = np.mean(self.clusters[idx], axis=0)
 
+    """
+    clustering evaluation.
+    loss function - SSE(Sum of Sqaured Distance)
+    """
     def cal_SSE(self) :
         sse = 0
         for i in range(self.k) :
@@ -73,7 +69,6 @@ class Kmeans:
         print('number of clusters: {}'.format(self.k))
         print('loss value of best solution(SSE): {}'.format(min(self.sse_seq)))
         print('sequence of loss values')
-        # PDF에선 분량을 줄이기 위해서 출력하지 않음
         for i in range(len(self.sse_seq)) : 
             print('k-means iteration {} : {}'.format(i+1, self.sse_seq[i]))
         for i in range(self.k) :
@@ -127,17 +122,20 @@ def variation_of_k_test() :
     # for i in range(len(dif_list)) :
     #    print('{}~{} -> {}'.format(i+2, i+1, dif_list[i]))
 
+    """
     plt.title("k-means algorithm simulation")
     plt.plot(results, 'b', dif_list, 'r')
     plt.xlabel('k/interval')
     plt.ylabel('sse')
     plt.show()
+    """
     
 def default_test() :
     dataset = mnist_images[:1000]
     best_solution, sse_list = my_kmeans(dataset, k = 10, init = 10)
     best_solution.report() # k-means result imformation
 
+    """
     plt.title("N initialzation loss values")
     plt.plot(sse_list, 'b')
     plt.xlabel('number of initializations')
@@ -149,6 +147,7 @@ def default_test() :
     plt.xlabel('iteration')
     plt.ylabel('sse')
     plt.show()
+    """
 
 mnist_images, mnist_labels = load_mnist_dataset()
 
